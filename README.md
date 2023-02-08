@@ -68,7 +68,7 @@ You will need to clone the repository of the project from Github. This will cont
 
 ```
 
-git clone https://github.com/jzamora5/AirBnB_clone.git
+git clone https://github.com/Bstar00/AirBnB_clone.git
 
 ```
 
