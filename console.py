@@ -12,8 +12,8 @@ class HBNBCommand(cmd.Cmd):
 
     """Class for the command interpreter."""
 
-	 intro = "---Welcome to hbnb! Type (?) or (help) to list commands.---"
-     prompt = "(hbnb) "
+    intro = "---Welcome to hbnb! Type (?) or (help) to list commands.---"
+    prompt = "(hbnb) "
 
     def default(self, line):
         """Catch commands if nothing else matches then."""
