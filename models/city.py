@@ -1,13 +1,13 @@
 #!/usr/bin/python3
-"""
-module inherits from BaseModel
-"""
+'''This module creates a User class'''
 from models.base_model import BaseModel
 
 
 class City(BaseModel):
-    """
-    City class that inherits from BaseModel
-    """
+    '''Class for managing city objects'''
     state_id = ""
     name = ""
+
+    def __init__(self, *args, **kwargs):
+        '''Initializes attributes for the city class'''
+        super().__init__(*args, **kwargs)
