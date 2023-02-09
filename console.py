@@ -2,10 +2,12 @@
 """This is Module for the entry point of the command interpreter."""
 
 import cmd
-from models.base_model import BaseModel
-from models import storage
-import re
 import json
+import re
+import sys
+
+from models import *
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -86,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """Doesn't do anything on ENTER.
+        """Doesn't do anything on ENTER or RETURN KEY
         """
         pass
 
