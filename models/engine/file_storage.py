@@ -6,6 +6,8 @@
 """
 import json
 
+import datetime
+
 from os.path import exists
 
 
@@ -43,7 +45,7 @@ class FileStorage:
 
         obj_in_dict = obj.to_dict()
 
-        key = f"{obj_in_dict.__class__}.{obj_in_dict['id']}"
+        key = f"{obj_in_dict['__class__']}.{obj_in_dict['id']}"
 
         self.__objects[key] = obj
 
@@ -89,4 +91,82 @@ class FileStorage:
     def create_obj(self, **dictionary):
         """Create an object from the dictionary"""
 
-        return dictionary.__class__(**dictionary)
+        return dictionary['__class__'](**dictionary)
+
+    def classes(self):
+        """Returns a dictionary of all implemented classes"""
+
+        from models.base_model import BaseModel
+
+        from models.user import User
+
+        from models.state import State
+
+        from models.city import City
+
+        from models.amenity import Amenity
+
+        from models.place import Place
+
+        from models.review import Review
+
+        return {
+                "BaseModel": BaseModel,
+
+                "User": User,
+
+                "State": State,
+
+                "City": City,
+
+                "Amenity": Amenity,
+
+                "Place": Place,
+
+                "Review": Review
+        }
+
+    def attributes(self):
+        """Return the attributes and its type for all objects"""
+        return {
+                "BaseModel": {
+                                'id': str,
+                                'created_at': datetime.datetime,
+                                'updated_at': datetime.datetime
+                                },
+
+                "User": {
+                            'email': str,
+                            'password': str,
+                            'first_name': str,
+                            'last_name': str
+                        },
+
+                "State": {'name': str},
+
+                "City": {
+                            'state_id': str,
+                            'name': str
+                        },
+
+                "Amenity": {'name': str},
+
+                "Place": {
+                            'city_id': str,
+                            'user_id': str,
+                            'name': str,
+                            'description': str,
+                            'number_rooms': int,
+                            'max_guest': int,
+                            'price_by_night': int,
+                            'longitude': float,
+                            'latitude': float,
+                            'amenity_ids': list
+                        },
+
+                "Review": {
+                            'place_id': str,
+                            'user_id': str,
+                            'text': str
+                            }
+        }
