@@ -1,54 +1,79 @@
 #!/usr/bin/python3
-"""Script for the base model"""
-import uuid
-import datetime
-from models import storage
+"""
+Custom base class for the entire project
+"""
+
+from uuid import uuid4
+from datetime import datetime
+import models
 
 
-class BaseModel():
-    ''''Class from which all other classes will inherit'''
+class BaseModel:
+    """Custom base for all the classes in the AirBnb console project
+
+    Arttributes:
+        id(str): handles unique user identity
+        created_at: assigns current datetime
+        updated_at: updates current datetime
+
+    Methods:
+        __str__: prints the class name, id, and creates dictionary
+        representations of the input values
+        save(self): updates instance arttributes with current datetime
+        to_dict(self): returns the dictionary values of the instance obj
+
+    """
 
     def __init__(self, *args, **kwargs):
-        '''Initializes instance attributes'''
+        """Public instance artributes initialization
+        after creation
 
-        if len(kwargs) == 0:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.datetime.now()
-            self.updated_at = datetime.datetime.now()
-            storage.new(self)
+        Args:
+            *args(args): arguments
+            **kwargs(dict): attrubute values
+
+        """
+        DATE_TIME_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'
+        if not kwargs:
+            self.id = str(uuid4())
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
+            models.storage.new(self)
         else:
-            for key in kwargs.keys():
-                # check and escape the __class__ key
-                if key == "__class__":
-                    continue
+            for key, value in kwargs.items():
+                if key in ("updated_at", "created_at"):
+                    self.__dict__[key] = datetime.strptime(
+                        value, DATE_TIME_FORMAT)
+                elif key[0] == "id":
+                    self.__dict__[key] = str(value)
                 else:
-                    # check and change the format for updated_at & created_at
-                    if key == "updated_at" or key == "created_at":
-                        kwargs[key] = datetime.datetime.strptime(
-                            kwargs[key], "%Y-%m-%dT%H:%M:%S.%f")
-                    # set the attributes of the instance
-                    setattr(self, key, kwargs[key])
-                # self.key = kwargs[key]
-                # print(f"{key}: {kwargs[key]}")
+                    self.__dict__[key] = value
 
     def __str__(self):
-        '''Returns official string representation'''
-        return (f"[{self.__class__.__name__}] ({self.id}) \
-{str(self.__dict__)}")
+        """
+        Returns string representation of the class
+        """
+        return "[{}] ({}) {}".format(self.__class__.__name__,
+                                     self.id, self.__dict__)
 
     def save(self):
-        '''updates the public instance attribute updated_at'''
-        storage.save()
-        self.updated_at = datetime.datetime.now()
+        """
+        Updates the public instance attribute:
+        'updated_at' - with the current datetime
+        """
+        self.updated_at = datetime.utcnow()
+        models.storage.save()
 
     def to_dict(self):
-        '''returns a dictionary containing all keys/values of __dict__'''
-        object_dict = {}
-        for key in self.__dict__.keys():
-            if key not in ('created_at', 'updated_at'):
-                object_dict[key] = self.__dict__[key]
+        """
+        Method returns a dictionary containing all 
+        keys/values of __dict__ instance
+        """
+        map_objects = {}
+        for key, value in self.__dict__.items():
+            if key == "created_at" or key == "updated_at":
+                map_objects[key] = value.isoformat()
             else:
-                object_dict[key] = datetime.datetime.isoformat(
-                    self.__dict__[key])
-        object_dict['__class__'] = self.__class__.__name__
-        return (object_dict)
+                map_objects[key] = value
+        map_objects["__class__"] = self.__class__.__name__
+        return map_objects

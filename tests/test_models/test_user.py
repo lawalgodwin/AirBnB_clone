@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""It defines unittests for models/user.py.
+"""Defines unittests for models/user.py.
 
 Unittest classes:
     TestUser_instantiation
@@ -91,7 +91,7 @@ class TestUser_instantiation(unittest.TestCase):
 
 
 class TestUser_save(unittest.TestCase):
-    """Unittests for testing the save method of the  class."""
+    """Unittests for testing save method of the  class."""
 
     @classmethod
     def setUp(self):

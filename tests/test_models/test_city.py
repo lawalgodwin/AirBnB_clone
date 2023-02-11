@@ -91,7 +91,7 @@ class TestCity_instantiation(unittest.TestCase):
 
 
 class TestCity_save(unittest.TestCase):
-    """Unittests for testing the save method of the City class."""
+    """Unittests for testing save method of the City class."""
 
     @classmethod
     def setUp(self):

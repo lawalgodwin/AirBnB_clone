@@ -136,7 +136,7 @@ class TestFileStorage_methods(unittest.TestCase):
 
     def test_save_with_arg(self):
         with self.assertRaises(TypeError):
-            models.storage.save(None)
+            models.storage.save(none)
 
     def test_reload(self):
         bm = BaseModel()

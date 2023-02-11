@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""It defines unittests for models/state.py.
+"""Defines unittests for models/state.py.
 
 Unittest classes:
     TestState_instantiation
@@ -85,7 +85,7 @@ class TestState_instantiation(unittest.TestCase):
 
 
 class TestState_save(unittest.TestCase):
-    """Unittests for testing the save method of the State class."""
+    """Unittests for testing save method of the State class."""
 
     @classmethod
     def setUp(self):
@@ -132,7 +132,7 @@ class TestState_save(unittest.TestCase):
         st.save()
         stid = "State." + st.id
         with open("file.json", "r") as f:
-            self.assertIn(stid, f.read())
+            self.assertIn(stid, f.read()
 
 
 class TestState_to_dict(unittest.TestCase):
@@ -181,7 +181,7 @@ class TestState_to_dict(unittest.TestCase):
 
     def test_to_dict_with_arg(self):
         st = State()
-		with self.assertRaises(TypeError):
+        with self.assertRaises(TypeError):
             st.to_dict(None)
 
 
