@@ -337,5 +337,5 @@ The recognizable commands by the interpreter are the following:
 
 
 ## Authors
-Awodeyi Blessing 
-Godwin Lawal
+- Awodeyi Blessing 
+- Godwin Lawal
