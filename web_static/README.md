@@ -1,1 +1,1 @@
-Coding the froont-end of the AirBnB clone
+Coding the front-end of the AirBnB clone
