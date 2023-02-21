@@ -1,0 +1,17 @@
+      header{
+             height: 70px;
+             width: 100%;
+	     background-color: #FFFFFF;
+             border-bottom: 1px #CCCCCC;
+             display: flex;
+             align-items: center;
+             justify-content: flex-start;
+      }
+
+
+      .logo-container{
+             width: 142px;
+             height: 60px;
+             background-image: url(../images/logo.png);
+             padding-left: 20px;
+      }
