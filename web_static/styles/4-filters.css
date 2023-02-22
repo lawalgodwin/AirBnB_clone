@@ -6,7 +6,6 @@
 	border-radius: 4px;
         display: flex;
         align-items: center;
-        justify-content: flex-end;
     }
 
     div.container 
@@ -19,8 +18,8 @@
         width: 20%;
         border: none;
         border-radius: 4px;
-        display: inline-block;
         margin-right: 30px;
+	margin-left: auto;
     }
 
     .btn-search:hover{
