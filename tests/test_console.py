@@ -49,7 +49,6 @@ class TestConsole(unittest.TestCase):
         """
         return HBNBCommand(stdin=self.mock_stdin, stdout=self.mock_stdout)
 
-
     def last_write(self, nr=None):
         """Returns last n output lines"""
         if nr is None:
