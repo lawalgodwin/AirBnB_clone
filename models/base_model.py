@@ -6,11 +6,26 @@ from uuid import uuid4
 
 class BaseModel:
     """Base model class for all model classes"""
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """class constructor"""
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        if kwargs:
+            # remove the class attribute
+            del kwargs['__class__']
+            dictValue = kwargs.copy()
+            for k, v in dictValue.items():
+                setattr(self, k, v)
+            # change the string formatted time to datetime object
+            created_at = self.created_at
+            updated_at = self.updated_at
+            self.created_at = datetime.strptime(
+                    created_at,
+                    "%Y-%m-%dT%H:%M:%S.%f")
+            self.updated_at = datetime.strptime(
+                    updated_at,
+                    "%Y-%m-%dT%H:%M:%S.%f")
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
 
     def __str__(self):
         """return human readable format for the object"""
