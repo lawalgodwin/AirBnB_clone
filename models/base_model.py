@@ -8,7 +8,7 @@ class BaseModel:
     """Base model class for all model classes"""
     def __init__(self, *args, **kwargs):
         """class constructor"""
-        if kwargs:
+        if kwargs and kwargs != {}:
             # remove the class attribute
             del kwargs['__class__']
             dictValue = kwargs.copy()
