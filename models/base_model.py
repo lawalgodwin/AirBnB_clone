@@ -14,7 +14,7 @@ class BaseModel:
             dictValue = kwargs.copy()
             for k, v in dictValue.items():
                 setattr(self, k, v)
-            # change the string formatted time to datetime object
+            # change the string formatted datetime to datetime object
             created_at = self.created_at
             updated_at = self.updated_at
             self.created_at = datetime.strptime(
@@ -26,6 +26,7 @@ class BaseModel:
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """return human readable format for the object"""
