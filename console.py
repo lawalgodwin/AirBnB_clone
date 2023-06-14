@@ -55,14 +55,14 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, line):
         """show an object with a particular ID"""
         if len(line.split(' ')) != 2:
-            print('Usage: show <modelname> <objectID>')
+            print('** instance id missing **')
         elif line.split(' ')[0] not in self.__classes.keys():
             print("** class doesn't exist **")
         else:
             modelName, ID = line.split(' ')
             key = f'{modelName}.{ID}'
             if key not in self.__allObjects.keys():
-                print(f"*** No {modelName} with the id {ID} ***")
+                print(f"** no instance found **")
             else:
                 obj = self.__allObjects[key]
                 print(obj)
@@ -70,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, line):
         """Deletes an object with the given ID"""
         if len(line.split(' ')) != 2:
-            print('Usage: destroy <modelname> <objectID>')
+            print('** class name missing **')
         elif line.split(' ')[0] not in self.__classes.keys():
             print("** class doesn't exist **")
         else:
