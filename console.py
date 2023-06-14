@@ -42,13 +42,13 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Save to Json file and print the ID"""
-        if len(line.split(' ')) != 1 or line is None:
+        if line == "" or line is None:
             return (print("** class name missing **"))
         modelName = line
         try:
             obj = self.__classes[modelName]()
             print(obj.to_dict().get('id'))
-            storage.save()
+            obj.save()
         except KeyError:
             print("** class doesn't exist **")
 
