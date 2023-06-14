@@ -41,9 +41,9 @@ class HBNBCommand(cmd.Cmd):
         print('Please enter a command or type "help" for assistance')
 
     def do_create(self, line):
-        """Create an object specified by the supplied arg(line)"""
+        """Save to Json file and print the ID"""
         if len(line.split(' ')) != 1 or line is None:
-            return (print("** Usage: create <modelName> **"))
+            return (print("** class name missing **"))
         modelName = line
         try:
             obj = self.__classes[modelName]()
