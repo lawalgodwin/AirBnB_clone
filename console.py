@@ -47,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
         modelName = line
         try:
             obj = self.__classes[modelName]()
-            print(obj.get('id'))
+            print(obj.id)
             obj.save()
         except KeyError:
             print("** class doesn't exist **")
