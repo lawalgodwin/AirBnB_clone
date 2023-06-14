@@ -14,7 +14,7 @@ class HBNBCommand(cmd.Cmd):
     __allObjects = storage.all()
     prompt = '(hbnb) '
 
-    def _precmd(self, line):
+    def precmd(self, line):
         """Preprocess user input before using it for computation"""
         line = line.strip()
         return line
