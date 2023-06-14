@@ -9,7 +9,7 @@ class FileStorage:
     and deserializes JSON file to instances
     """
     # private class attributes
-    __file_path = 'db.json'
+    __file_path = 'file.json'
     __objects = {}
 
     # public instance methods
