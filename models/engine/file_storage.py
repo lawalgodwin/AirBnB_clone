@@ -32,7 +32,8 @@ class FileStorage:
     def reload(self):
         """Deseialize the JSONfile to __objects(only if __file_path exists)"""
         from models.base_model import BaseModel
-        classes = {'BaseModel': BaseModel}
+        from models.user import User
+        classes = {'BaseModel': BaseModel, 'User': User}
         if os.path.exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
                 jsonstring = json.load(file)
