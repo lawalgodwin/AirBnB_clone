@@ -1,7 +1,11 @@
 #!/usr/bin/python3
-"""Base model for all models"""
+"""The user model"""
+from models.base_model import BaseModel
 
 
-class User:
-    """Base model class for all model classes"""
-    pass
+class User(BaseModel):
+    """The User class definition"""
+    email = ''
+    password = ''
+    first_name = ''
+    last_name = ''
