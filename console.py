@@ -59,11 +59,11 @@ class HBNBCommand(cmd.Cmd):
         if line == "" or line is None:
             return (print("** class name missing **"))
         modelName = line
-        try:
+        if modelName in self.__classes.keys():
             obj = self.__classes[modelName]()
             obj.save()
             print(obj.id)
-        except KeyError:
+        else:
             print("** class doesn't exist **")
 
     def do_show(self, line):
