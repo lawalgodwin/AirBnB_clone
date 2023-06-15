@@ -85,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, line):
         """Deletes an object with the given ID"""
-        if len(line.split(' ')) != 2:
+        if line == "" or line is None:
             print('** class name missing **')
         elif line.split(' ')[0] not in self.__classes.keys():
             print("** class doesn't exist **")
