@@ -116,28 +116,53 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Update an object specified by the given ID"""
-        if line == "" or line is None:
-            print("** class name missing **")
-        elif not (len(line.split(' ')) > 2):
-            return print('Usage: update <ModelName> <objectID>')
-        modelName, ID = line.split(' ')[:2]
-        newData = line.split(' ')[2:]
+        try:
+            modelName = line.split(' ')[0]
+        except IndexError:
+            return print("** class name missing **")
+
+        if modelName not in self.__classes.keys():
+            return print("** class doesn't exist **")
+
+        try:
+            ID = line.split(' ')[1]
+        except IndexError:
+            return print("** instance id missing **")
+
         key = f'{modelName}.{ID}'
+        if not storage.all().get(key):
+            return print("** no instance found **")
+
+        try:
+            attr = line.split(' ')[2]
+        except IndexError:
+            return print("** attribute name missing **")
+
+        try:
+            attrValue = line.split(' ')[3]
+        except IndexError:
+            return print("** value missing **")
+
         data = {}
-        # convert the new data to dictionary
-        d = {
-                newData[i]: (newData[i + 1]).replace('"', '')
-                for i in range(0, len(newData), 2)
-        }
+
+        if attr in ['id', 'updated_at', 'created_at']:
+            return False
+        if type(attr) is str:
+            attrValue = str(attrValue.replace('"', '').replace("'", ''))
+        elif type(attr) is float:
+            attrValue = float(attrValue)
+        else:
+            attrValue = int(attrValue)
         try:
             # prepare the data to make changes with
+            d = {attr: attrValue}
             data.update(storage.all()[key].to_dict())
             data.update(d)
             """ update the data """
             dataToBeChanged = storage.all()[key]
             # check if data needs to be updated
             if dataToBeChanged.to_dict() == data:
-                return print('Data is already up to date')
+                return
             # make changes and save
             storage.all()[key] = self.__classes[modelName](**data)
             storage.all()[key].save()
