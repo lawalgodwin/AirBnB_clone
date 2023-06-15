@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
             storage.all()[key] = self.__classes[modelName](**data)
             storage.all()[key].save()
         except KeyError:
-            print('** Object not found **')
+            print('** no instance found **')
 
 
 if __name__ == '__main__':
