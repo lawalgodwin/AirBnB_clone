@@ -4,6 +4,11 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from models import storage
 import json
 import sys
@@ -11,7 +16,15 @@ import sys
 
 class HBNBCommand(cmd.Cmd):
     """The class that handles all command from a user"""
-    __classes = {'BaseModel': BaseModel, 'User': User}
+    __classes = {
+                    'BaseModel': BaseModel,
+                    'User': User,
+                    'Place': Place,
+                    'State': State,
+                    'City': City,
+                    'Amenity': Amenity,
+                    'Review': Review
+    }
     __allObjects = storage.all()
     prompt = '(hbnb) '
 
