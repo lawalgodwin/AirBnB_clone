@@ -161,8 +161,8 @@ class HBNBCommand(cmd.Cmd):
             """ update the data """
             dataToBeChanged = storage.all()[key]
             # check if data needs to be updated
-            if dataToBeChanged.to_dict() == data:
-                return
+            #if dataToBeChanged.to_dict() == data:
+            #  return
             # make changes and save
             storage.all()[key] = self.__classes[modelName](**data)
             storage.all()[key].save()
