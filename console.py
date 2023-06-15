@@ -87,6 +87,8 @@ class HBNBCommand(cmd.Cmd):
         """Deletes an object with the given ID"""
         if line == "" or line is None:
             print('** class name missing **')
+        elif len(line.split(' ')) != 2:
+            print("** instance id missing **")
         elif line.split(' ')[0] not in self.__classes.keys():
             print("** class doesn't exist **")
         else:
@@ -96,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
                 del storage.all()[key]
                 storage.save()
             except KeyError:
-                print("** object not found **")
+                print("** no instance found **")
 
     def do_all(self, line):
         """Prints all objects of the type(line)"""
