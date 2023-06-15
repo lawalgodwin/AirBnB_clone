@@ -138,6 +138,9 @@ class HBNBCommand(cmd.Cmd):
         except IndexError:
             return print("** attribute name missing **")
 
+        if attr in ['id', 'updated_at', 'created_at']:
+            return False
+
         try:
             attrValue = line.split(' ')[3]
         except IndexError:
@@ -145,8 +148,6 @@ class HBNBCommand(cmd.Cmd):
 
         data = {}
 
-        if attr in ['id', 'updated_at', 'created_at']:
-            return False
         if type(attr) is str:
             attrValue = str(attrValue.replace('"', '').replace("'", ''))
         elif type(attr) is float:
@@ -161,7 +162,7 @@ class HBNBCommand(cmd.Cmd):
             """ update the data """
             dataToBeChanged = storage.all()[key]
             # check if data needs to be updated
-            #if dataToBeChanged.to_dict() == data:
+            # if dataToBeChanged.to_dict() == data:
             #  return
             # make changes and save
             storage.all()[key] = self.__classes[modelName](**data)
