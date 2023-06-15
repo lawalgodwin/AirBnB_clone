@@ -116,7 +116,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Update an object specified by the given ID"""
-        if not (len(line.split(' ')) > 2):
+        if line == "" or line is None:
+            print("** class name missing **")
+        elif not (len(line.split(' ')) > 2):
             return print('Usage: update <ModelName> <objectID>')
         modelName, ID = line.split(' ')[:2]
         newData = line.split(' ')[2:]
