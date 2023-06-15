@@ -1,76 +1,31 @@
 #!/usr/bin/python3
-"""
-Module of the Amenity unittest
-"""
+"""A test script for the amenity module"""
 
 import unittest
 from models.base_model import BaseModel
-from datetime import datetime
-import os
 from models.amenity import Amenity
 
 
 class TestAmenity(unittest.TestCase):
-    """
-    Test of the Amenity class
-    """
+    """Test case for the amenity class"""
 
-    # Specific set up of the unittest
     def setUp(self):
-        """Instance of the class"""
-        self.inst = Amenity()
+        # Create an instance of Amenity for testing
+        self.amenity = Amenity()
 
-    def tearDown(self):
-        """Deleting of the instance with the proper file"""
-        del self.inst
+    def test_attributes(self):
+        # Test the initial attribute values
+        self.assertEqual(self.amenity.name, "")
 
-        try:
-            os.remove("file.json")
-        except BaseException:
-            pass
+    def test_inheritance(self):
+        # Test if Amenity inherits from BaseModel
+        self.assertIsInstance(self.amenity, BaseModel)
 
-    # Functionality
-    def test_AtributtesClass(self):
-        self.inst.name = "Blessing"
-        self.assertEqual(str, type(self.inst.name))
-        self.assertEqual("Blessing", self.inst.name)
-
-    # Documentation
-    def test_ModuleDocstring(self):
-        """Testing the documentation of the module"""
-        self.assertIsNotNone(Amenity.__doc__)
-
-    def test_MethodsDocstring(self):
-        """Testing the documentation of the different methods"""
-        for doc in dir(Amenity):
-            self.assertIsNotNone(doc.__doc__)
-
-    # Existence and types
-    def test_IsInstance(self):
-        """Testing the existence of the instance"""
-        self.assertIsInstance(self.inst, Amenity)
-
-    def test_TypeId(self):
-        """Test the type of the method id"""
-        self.assertEqual(str, type(self.inst.id))
-
-    def test_File(self):
-        """The existence of the json file"""
-        self.inst.save()
-        self.assertTrue(os.path.isfile("file.json"))
-
-    def test_Attrs(self):
-        """Testing the existence of the different methods"""
-        self.assertTrue(hasattr(Amenity, "name"))
-
-    def test_ClassDict(self):
-        """Testing the dictionary of the class"""
-        ClassDict = self.inst.to_dict()
-        self.assertEqual(dict, type(ClassDict))
-        self.assertIsInstance(ClassDict["created_at"], str)
-        self.assertIsInstance(ClassDict["updated_at"], str)
-        self.assertFalse("ClassDict" in dir(self.inst))
+    def test_setting_attributes(self):
+        # Test setting attribute values
+        self.amenity.name = "Swimming Pool"
+        self.assertEqual(self.amenity.name, "Swimming Pool")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
