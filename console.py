@@ -70,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
         """show an object with a particular ID"""
         if line == "" or line is None:
             print("** class name missing **")
-        elif len(line.split(' ')) != 2:
+        elif len(line.split(' ')) < 2:
             print('** instance id missing **')
         elif line.split(' ')[0] not in self.__classes.keys():
             print("** class doesn't exist **")
