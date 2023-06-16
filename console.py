@@ -154,22 +154,19 @@ class HBNBCommand(cmd.Cmd):
             attrValue = float(attrValue)
         else:
             attrValue = int(attrValue)
-        try:
-            # prepare the data to make changes with
-            d = {attr: attrValue}
-            data.update(storage.all()[key].to_dict())
-            data.update(d)
-            """ update the data """
-            dataToBeChanged = storage.all()[key]
-            # check if data needs to be updated
-            # if dataToBeChanged.to_dict() == data:
-            #  return
-            # make changes and save
-            # storage.all()[key] = self.__classes[modelName](**data)
-            setattr(storage.all()[key], attr, attrValue)
-            storage.all()[key].save()
-        except KeyError:
-            print('** no instance found **')
+        # prepare the data to make changes with
+        d = {attr: attrValue}
+        data.update(storage.all()[key].to_dict())
+        data.update(d)
+        """ update the data """
+        dataToBeChanged = storage.all()[key]
+        # check if data needs to be updated
+        # if dataToBeChanged.to_dict() == data:
+        #  return
+        # make changes and save
+        # storage.all()[key] = self.__classes[modelName](**data)
+        setattr(storage.all()[key], attr, attrValue)
+        storage.all()[key].save()
 
 
 if __name__ == '__main__':
