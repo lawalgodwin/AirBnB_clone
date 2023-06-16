@@ -87,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
         """Deletes an object with the given ID"""
         if line == "" or line is None:
             print('** class name missing **')
-        elif len(line.split(' ')) != 2:
+        elif len(line.split(' ')) < 2:
             print("** instance id missing **")
         elif line.split(' ')[0] not in self.__classes.keys():
             print("** class doesn't exist **")
@@ -117,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """Update an object specified by the given ID"""
         try:
-            modelName = line.split(' ')[0]
+            modelName = line.split()[0]
         except IndexError:
             return print("** class name missing **")
 
@@ -125,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
             return print("** class doesn't exist **")
 
         try:
-            ID = line.split(' ')[1]
+            ID = line.split()[1]
         except IndexError:
             return print("** instance id missing **")
 
@@ -134,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
             return print("** no instance found **")
 
         try:
-            attr = line.split(' ')[2]
+            attr = line.split()[2]
         except IndexError:
             return print("** attribute name missing **")
 
@@ -142,7 +142,8 @@ class HBNBCommand(cmd.Cmd):
             return False
 
         try:
-            attrValue = line.split(' ')[3]
+            attrValue = line.split()[3]
+            print(attrValue)
         except IndexError:
             return print("** value missing **")
 
