@@ -165,7 +165,8 @@ class HBNBCommand(cmd.Cmd):
             # if dataToBeChanged.to_dict() == data:
             #  return
             # make changes and save
-            storage.all()[key] = self.__classes[modelName](**data)
+            # storage.all()[key] = self.__classes[modelName](**data)
+            setattr(storage.all()[key], attr, attrValue)
             storage.all()[key].save()
         except KeyError:
             print('** no instance found **')
