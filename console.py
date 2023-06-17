@@ -143,7 +143,6 @@ class HBNBCommand(cmd.Cmd):
 
         try:
             attrValue = line.split()[3]
-            print(attrValue)
         except IndexError:
             return print("** value missing **")
 
