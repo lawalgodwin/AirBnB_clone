@@ -31,7 +31,7 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """Preprocess user input before using it for computation"""
-        return line
+        return line.strip()
 
     def postloop(self):
         """Called after the command loop has exited"""
