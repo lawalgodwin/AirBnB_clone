@@ -9,6 +9,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import re
 from models import storage
 import json
 import sys
@@ -30,7 +31,6 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """Preprocess user input before using it for computation"""
-        line = line.strip()
         return line
 
     def postloop(self):
@@ -69,13 +69,14 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, line):
         """show an object with a particular ID"""
         if line == "" or line is None:
-            print("** class name missing **")
-        elif len(line.split(' ')) < 2:
-            print('** instance id missing **')
-        elif line.split(' ')[0] not in self.__classes.keys():
+            return print("** class name missing **")
+        line = re.findall(r'"[^"]+"|\S+', line)
+        if line[0] not in self.__classes.keys():
             print("** class doesn't exist **")
+        elif len(line) < 2:
+            print('** instance id missing **')
         else:
-            modelName, ID = line.split(' ')
+            modelName, ID = line
             key = f'{modelName}.{ID}'
             if key not in self.__allObjects.keys():
                 print(f"** no instance found **")
@@ -86,19 +87,20 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, line):
         """Deletes an object with the given ID"""
         if line == "" or line is None:
-            print('** class name missing **')
-        elif len(line.split(' ')) < 2:
+            return print('** class name missing **')
+        line = re.findall(r'"[^"]+"|\S+', line)
+        if len(line) < 2:
             print("** instance id missing **")
-        elif line.split(' ')[0] not in self.__classes.keys():
+        elif line[0] not in self.__classes.keys():
             print("** class doesn't exist **")
         else:
-            modelName, ID = line.split(' ')
+            modelName, ID = line
             key = f'{modelName}.{ID}'
             try:
                 del storage.all()[key]
                 storage.save()
             except KeyError:
-                print("** no instance found **")
+                return print("** no instance found **")
 
     def do_all(self, line):
         """Prints all objects of the type(line)"""
@@ -117,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """Update an object specified by the given ID"""
         try:
-            modelName = line.split()[0]
+            modelName = re.findall(r'"[^"]+"|\S+', line)[0]
         except IndexError:
             return print("** class name missing **")
 
@@ -125,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
             return print("** class doesn't exist **")
 
         try:
-            ID = line.split()[1]
+            ID = re.findall(r'"[^"]+"|\S+', line)[1]
         except IndexError:
             return print("** instance id missing **")
 
@@ -134,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
             return print("** no instance found **")
 
         try:
-            attr = line.split()[2]
+            attr = re.findall(r'"[^"]+"|\S+', line)[2]
         except IndexError:
             return print("** attribute name missing **")
 
@@ -142,7 +144,7 @@ class HBNBCommand(cmd.Cmd):
             return False
 
         try:
-            attrValue = line.split()[3]
+            attrValue = re.findall(r'"[^"]+"|\S+', line)[3]
         except IndexError:
             return print("** value missing **")
 
