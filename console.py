@@ -29,8 +29,22 @@ class HBNBCommand(cmd.Cmd):
     __allObjects = storage.all()
     prompt = '(hbnb) '
 
+    def default(self, line):
+        """Override command execution based on user input"""
+        self.precmd(line)
+
     def precmd(self, line):
         """Preprocess user input before using it for computation"""
+        if "." in line:
+            result = re.search(r"^(\w+)\.(\w+)(\(.*\))$", line)
+            if result:
+                resource = result.group(1)
+                command = result.group(2)
+                args = result.group(3).strip('(').replace(',', '').strip(')')
+                userCmd = command + ' ' + resource + ' ' + args
+                self.onecmd(userCmd)
+                return userCmd
+
         return line.strip()
 
     def help_quit(self):
