@@ -42,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
                 command = result.group(2)
                 args = result.group(3).strip('(').replace(',', '').strip(')')
                 userCmd = command + ' ' + resource + ' ' + args
-                self.onecmd(userCmd)
+                # self.onecmd(userCmd)
                 return userCmd
 
         return line.strip()
@@ -184,6 +184,20 @@ class HBNBCommand(cmd.Cmd):
         # storage.all()[key] = self.__classes[modelName](**data)
         setattr(storage.all()[key], attr, attrValue)
         storage.all()[key].save()
+
+    def do_count(self, line):
+        """Print the number of an object"""
+        if line == "" or line is None:
+            return print("** class name missing **")
+        line = re.findall(r'"[^"]+"|\S+', line)
+        if line[0] not in self.__classes.keys():
+            print("** class doesn't exist **")
+        else:
+            objKeys = []
+            for k in storage.all().keys():
+                if k.startswith(line[0]):
+                    objKeys.append(k)
+            print(len(objKeys))
 
 
 if __name__ == '__main__':
