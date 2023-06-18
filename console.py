@@ -33,10 +33,6 @@ class HBNBCommand(cmd.Cmd):
         """Preprocess user input before using it for computation"""
         return line.strip()
 
-    def postloop(self):
-        """Called after the command loop has exited"""
-        print('\nGoodbye...')
-
     def help_quit(self):
         """How to exit the program"""
         print('Quit command to exit the program')
@@ -104,17 +100,22 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """Prints all objects of the type(line)"""
-        if line not in self.__classes.keys():
-            print("** class doesn't exist **")
+        className = line
+        if className not in self.__classes.keys():
+            return print("** class doesn't exist **")
+        if '.' in line:
+            className, command = line.split('.')
         else:
-            filteredObjects = {}
-            objects = self.__allObjects
-            for k, v in objects.items():
-                modelName = k.split('.')[0]
-                if modelName == line:
-                    filteredObjects.update({k: v})
-            storedObjects = [str(v) for k, v in filteredObjects.items()]
-            print(storedObjects)
+            className = line
+
+        filteredObjects = {}
+        objects = self.__allObjects
+        for k, v in objects.items():
+            modelName = k.split('.')[0]
+            if modelName == className:
+                filteredObjects.update({k: v})
+        storedObjects = [str(v) for k, v in filteredObjects.items()]
+        print(storedObjects)
 
     def do_update(self, line):
         """Update an object specified by the given ID"""
