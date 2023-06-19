@@ -185,16 +185,18 @@ class HBNBCommand(cmd.Cmd):
         except IndexError:
             return print("** value missing **")
 
+        attrValue = str(attrValue).replace(',', '')
+
         """ update the data """
         instance = eval(modelName)()
         if hasattr(instance, attr):
             variable = getattr(instance, attr)
             castType = type(variable).__name__
-            attrValue = str(attrValue).replace(',', '')
             setattr(storage.all()[key], attr, eval(castType)(attrValue))
             storage.all()[key].save()
         else:
-            return False
+            setattr(storage.all()[key], attr, attrValue)
+            storage.all()[key].save()
 
     def do_count(self, line):
         """Print the number of an object"""
