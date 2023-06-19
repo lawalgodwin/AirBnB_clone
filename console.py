@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Console app (Front end for the admin users)"""
 
+import ast
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -40,10 +41,30 @@ class HBNBCommand(cmd.Cmd):
             if result:
                 resource = result.group(1)
                 command = result.group(2)
-                args = result.group(3).strip('(').replace(',', '').strip(')')
-                userCmd = command + ' ' + resource + ' ' + args
+                ID = ''
+                _cmd = ''
+                args = result.group(3).strip('(').strip(')')
+                # test for occurence of a dictionary
+                dictfound = re.search(r'(\{.*\})', args)
+                if dictfound and command == "update":
+                    data = (dictfound.group(1).replace(':', ''))
+                    data = str(data).strip('{').strip('}')
+                    field_and_value = str(data).replace('"', '')
+                    field_and_value = str(field_and_value).replace("'", '')
+                    ID = str(args.split(',')[0]).replace('"', '')
+                    _cmd = (
+                            command + ' '
+                            + resource + ' '
+                            + ID + ' '
+                            + field_and_value
+                    )
+                    return _cmd
+                else:
+                    args = args.replace(',', '')
+                    args = args.replace('"', '').replace("'", '')
+                    _cmd = command + ' ' + resource + ' ' + args
                 # self.onecmd(userCmd)
-                return userCmd
+                    return _cmd
 
         return line.strip()
 
@@ -166,7 +187,7 @@ class HBNBCommand(cmd.Cmd):
         data = {}
 
         if type(attr) is str:
-            attrValue = str(attrValue.replace('"', '').replace("'", ''))
+            attrValue = str(attrValue.replace('"', '').replace("'", '"'))
         elif type(attr) is float:
             attrValue = float(attrValue)
         else:
