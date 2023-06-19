@@ -51,6 +51,7 @@ class HBNBCommand(cmd.Cmd):
                     data = str(data).strip('{').strip('}')
                     field_and_value = str(data).replace('"', '')
                     field_and_value = str(field_and_value).replace("'", '')
+                    field_and_value = str(field_and_value).replace(',', '')
                     ID = str(args.split(',')[0]).replace('"', '')
                     _cmd = (
                             command + ' '
@@ -184,27 +185,13 @@ class HBNBCommand(cmd.Cmd):
         except IndexError:
             return print("** value missing **")
 
-        data = {}
-
-        if type(attr) is str:
-            attrValue = str(attrValue.replace('"', '').replace("'", '"'))
-        elif type(attr) is float:
-            attrValue = float(attrValue)
-        else:
-            attrValue = int(attrValue)
-        # prepare the data to make changes with
-        d = {attr: attrValue}
-        data.update(storage.all()[key].to_dict())
-        data.update(d)
         """ update the data """
-        dataToBeChanged = storage.all()[key]
-        # check if data needs to be updated
-        # if dataToBeChanged.to_dict() == data:
-        #  return
-        # make changes and save
-        # storage.all()[key] = self.__classes[modelName](**data)
-        if hasattr(dataToBeChanged, attr):
-            setattr(storage.all()[key], attr, attrValue)
+        instance = eval(modelName)()
+        if hasattr(instance, attr):
+            variable = getattr(instance, attr)
+            castType = type(variable).__name__
+            attrValue = str(attrValue).replace(',', '')
+            setattr(storage.all()[key], attr, eval(castType)(attrValue))
             storage.all()[key].save()
         else:
             return False
