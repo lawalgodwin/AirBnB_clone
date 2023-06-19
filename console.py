@@ -206,7 +206,6 @@ class HBNBCommand(cmd.Cmd):
         if hasattr(dataToBeChanged, attr):
             setattr(storage.all()[key], attr, attrValue)
             storage.all()[key].save()
-            print("updated")
         else:
             return False
 
