@@ -203,8 +203,12 @@ class HBNBCommand(cmd.Cmd):
         #  return
         # make changes and save
         # storage.all()[key] = self.__classes[modelName](**data)
-        setattr(storage.all()[key], attr, attrValue)
-        storage.all()[key].save()
+        if hasattr(dataToBeChanged, attr):
+            setattr(storage.all()[key], attr, attrValue)
+            storage.all()[key].save()
+            print("updated")
+        else:
+            return False
 
     def do_count(self, line):
         """Print the number of an object"""
