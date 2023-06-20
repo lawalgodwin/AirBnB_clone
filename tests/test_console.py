@@ -22,13 +22,13 @@ from models.review import Review
 
 class TestConsole(unittest.TestCase):
     """
-    Unittest for the console model
+    Unit test for the console app
     """
 
     def setUp(self):
-        """Redirecting stdin and stdout"""
-        self.mock_stdin = create_autospec(sys.stdin)
-        self.mock_stdout = create_autospec(sys.stdout)
+        """Basic setup before each testcase"""
+        self.cli = HBNBCommand()
+        self.output = StringIO()
         self.err = ["** class name missing **",
                     "** class doesn't exist **",
                     "** instance id missing **",
@@ -43,23 +43,33 @@ class TestConsole(unittest.TestCase):
                     "Amenity",
                     "Review"]
 
-    def create(self, server=None):
-        """
-        Redirects stdin and stdout to the mock module
-        """
-        return HBNBCommand(stdin=self.mock_stdin, stdout=self.mock_stdout)
+    def tearDown(self):
+        """Basic cleanup after each test case"""
+        self.output.close()
 
-    def last_write(self, nr=None):
-        """Returns last n output lines"""
-        if nr is None:
-            return self.mock_stdout.write.call_args[0][0]
-        return "".join(map(lambda c: c[0][0],
-                           self.mock_stdout.write.call_args_list[-nr:]))
+    def test_create_command(self):
+        """
+        test for object creation
+        """
+        with patch('sys.stdout', self.output):
+            self.cli.onecmd("create")
+        nonameoutput = self.output.getvalue().strip()
+        self.assertEqual(nonameoutput, self.err[0])
 
-    def test_quit(self):
-        """Quit command"""
-        cli = self.create()
-        self.assertTrue(cli.onecmd("quit"))
+    def test_destroy_command(self, nr=None):
+        """test for destroy command"""
+
+    def test_show_command(self):
+        """test for show command"""
+
+    def test_update_command(self):
+        """test for the update command"""
+    def test_quit_command(self):
+        """test for Quit command"""
+        with patch('sys.stdout', self.output):
+            self.cli.onecmd("quit")
+        output = self.output.getvalue().strip()
+        self.assertEqual(output, "Exiting...")
 
 
 if __name__ == '__main__':
